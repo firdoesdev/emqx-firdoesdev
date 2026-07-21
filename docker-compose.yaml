@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  emqx:
+    image: emqx/emqx-enterprise:6.2.2
+    container_name: emqx
+    ports:
+      - "1883:1883"    # MQTT TCP
+      - "8883:8883"    # MQTT SSL
+      - "8083:8083"    # MQTT WebSocket
+      - "8084:8084"    # MQTT WebSockets SSL
+      - "18083:18083"  # EMQX Dashboard (Web UI)
+    volumes:
+      - $PWD/data:/opt/emqx/data
+      - $PWD/log:/opt/emqx/log # Folder `data`
+    restart: unless-stopped
+    environment:
+      EMQX_DASHBOARD__DEFAULT_PASSWORD: monicarovianadewi
+volumes:
+  emqx-volumes:
