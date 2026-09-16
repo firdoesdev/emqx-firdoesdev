@@ -4,9 +4,14 @@ services:
     container_name: emqx
     ports:
       # Hanya listen di localhost — TLS di-terminate oleh Nginx di host.
-      - "127.0.0.1:1883:1883"    # MQTT TCP     -> Nginx stream (mqtts 8883)
-      - "127.0.0.1:8083:8083"    # MQTT WS      -> Nginx wss /mqtt
-      - "127.0.0.1:18083:18083"  # Dashboard    -> Nginx https /
+      # - 1883:1883    # MQTT TCP     -> Nginx stream (mqtts 8883)
+      # - 8083:8083    # MQTT WS      -> Nginx wss /mqtt
+      # - 18083:18083  # Dashboard    -> Nginx https /
+      - "1883:1883"    # MQTT Protocol port
+      - "8883:8883"    # MQTT SSL port
+      - "8083:8083"    # MQTT WebSockets port
+      - "8084:8084"    # MQTT WebSockets SSL port
+      - "18083:18083"  # EMQX Dashboard (Management Web UI)
     volumes:
       - emqx-data:/opt/emqx/data
       - emqx-log:/opt/emqx/log
